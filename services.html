@@ -44,7 +44,7 @@
         <li class="bold "><a href="./home.html" class="waves-effect waves-teal">Home</a></li>
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
-            <li class="bold active"><a class="collapsible-header  waves-effect waves-teal" href="./services.html">Services</a></li>
+            <li class="bold active grey lighten-3"><a class="collapsible-header  waves-effect waves-teal" href="./services.html">Services</a></li>
             <li class="bold"><a class="collapsible-header  waves-effect waves-teal" href="./about.html">About</a></li>
             <li class="bold"><a class="collapsible-header  waves-effect waves-teal" href="./contact.html">Contact us</a></li>
           </ul>
@@ -347,6 +347,17 @@ We Also offer Diskless Solution Setup
       <script >
       $(document).ready(function(){
        setTimeout(function(){ $('.carousel .carousel-slider').carousel({full_width: true}); },1000);
+                        $('.carousel.carousel-slider').each(function() {
+var view = $(this);
+var firstImage = view.find('.carousel-item img').first();
+var imageHeight = firstImage[0].naturalHeight;
+if (imageHeight > 0) {
+view.css('height', imageHeight / firstImage[0].naturalWidth * view.width());
+}
+else {
+view.css('height', 400);
+}
+});
         setInterval(function(){
           $('.carousel').carousel('next');
 
