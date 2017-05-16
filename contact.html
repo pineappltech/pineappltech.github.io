@@ -272,7 +272,8 @@ if (imageHeight > 0) {
 view.css('height', imageHeight / firstImage[0].naturalWidth * view.width());
 }
 else {
-view.css('height', 400);
+  view.css('height', imageHeight / firstImage[0].naturalWidth * view.width());
+//view.css('height', 400);
 }
 });
         setInterval(function(){
