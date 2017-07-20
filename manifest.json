@@ -1,0 +1,27 @@
+{
+  "short_name": "pineappl tech",
+  "name": "Kinlan's AirHorner of Infamy",
+  "icons": [
+    {
+      "src": "resources/img/logo.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "resources/img/logo.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "resources/img/logo.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#00C851",
+  "theme_color": "#00C851",
+  "display":"standalone",
+  "orientation":"portrait"
+  
+}
