@@ -17,7 +17,11 @@
   
       <script >
       window.location.href="https://site.pineappltech.com/home.html";
-      </script>
+      
+  if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js');
+}  
+  </script>
 
     </body>
   </html>
