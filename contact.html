@@ -40,6 +40,10 @@
   ga('create', 'UA-99233931-1', 'auto');
   ga('send', 'pageview');
 
+  
+   if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw5.js');
+}  
 </script>
     
   <body>
