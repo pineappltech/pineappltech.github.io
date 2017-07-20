@@ -16,7 +16,7 @@ const PRECACHE_URLS = [
   'services.html',
   'jquery.min.js',
   'materialize.min.css',
-  'materialize.min.js'
+  'materialize.min.js',
   'js/init.js',
   'js/prism.js',
   'css/prism.css',
