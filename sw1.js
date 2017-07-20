@@ -22,7 +22,6 @@ const PRECACHE_URLS = [
   'css/prism.css',
   'css/ghpages-materialize.css',
 'jade/lunr.min.js',
-'images/donate.png',
 'https://fonts.googleapis.com/icon?family=Material+Icons'
   
 ];
