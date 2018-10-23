@@ -106,7 +106,7 @@ function setalbums(limit,offset){
 var pagename=$('#pagename').val();
 var counter=parseInt($('#counter').val());
 
-$.getJSON('https://graph.facebook.com/v3.1/'+pagename+'/posts?fields=id,created_time,caption,picture,name,parent_id,description,child_attachments,backdated_time,source,story,link,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&limit='+limit+'&offset='+offset+'&&access_token=EAABZBstjNtoQBAJZBJCWecGskaLYe9hA75lfqHd6KanvujDY61ANv8I3sESZCVDgCr0mkWXSktLvVD5fj2bGMZB8XFgOpFYw7qGEJvNBjgFaTEOd7dzqOE23wfj6tMeh5ZBe8aNHAusBJhKpEqfh34jF9ZBSUaE1AZD&callback=?', function(json, status, xhr) { console.log(json);
+$.getJSON('https://graph.facebook.com/v3.1/'+pagename+'/posts?fields=id,created_time,caption,picture,name,parent_id,description,child_attachments,backdated_time,source,story,link,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&limit='+limit+'&offset='+offset+'&&access_token=EAABZBstjNtoQBAEPYR4UGY9EktG1hrBVfZAZAi24EmrW0cWJZBejPbXvcFFRpV1RgCZBkr1gcTPNCECtozIT3lYrcypIgYLgD3nuE2jtJSaRHiQkGJWDWCnGXfGZCUXjxfA0ifIhy6CEcOekNTU8OVpMZB65fFgZAPHsxvrxQXl04QZDZD&callback=?', function(json, status, xhr) { console.log(json);
         var n=json.data;
         var str="";
 	for(var x=0;x<n.length;x++){
@@ -143,7 +143,7 @@ $('#tbl tbody').append(`
 
 </tr>
 	`);
-     setInterval(function(){ view_post_summary(id,counter); },1000);
+     setInterval(function(){ view_post_summary(id,counter); },60000);
 	
 	   counter+=1;
 
@@ -157,7 +157,7 @@ $('#counter').val(counter);
 }
 
 function getcover_photo(id,name){
-$.getJSON('https://graph.facebook.com/v2.12/'+id+'/photos?fields=album,height,source&limit=1&access_token=EAABZBstjNtoQBAOEgF0JgqRqvuQ4mdZC5oKPIKuh2DWFic0X8QG5z6XzVfrG9ZAzWykjZAfj9M3xIKtupQiOsMYoZBlhaK5SoozqpE2OybU1UxIFustqUtdF17K9pLU3nUL9O7WO4aC0ZCNmcZC4VvXj9SZAtjn4m3EWsbuZAzX0byRqcRj5hqIfn&callback=?', function(json, status, xhr) { console.log(json);
+$.getJSON('https://graph.facebook.com/v2.12/'+id+'/photos?fields=album,height,source&limit=1&access_token=EAABZBstjNtoQBAEPYR4UGY9EktG1hrBVfZAZAi24EmrW0cWJZBejPbXvcFFRpV1RgCZBkr1gcTPNCECtozIT3lYrcypIgYLgD3nuE2jtJSaRHiQkGJWDWCnGXfGZCUXjxfA0ifIhy6CEcOekNTU8OVpMZB65fFgZAPHsxvrxQXl04QZDZD&callback=?', function(json, status, xhr) { console.log(json);
           var n = json.data;
 
           	var source=n[0].source;
@@ -175,7 +175,7 @@ $.getJSON('https://graph.facebook.com/v2.12/'+id+'/photos?fields=album,height,so
 
 function view_post_summary(id,xx){
 
-	$.getJSON('https://graph.facebook.com/v3.1/'+id+'/?fields=id,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&access_token=EAABZBstjNtoQBAJZBJCWecGskaLYe9hA75lfqHd6KanvujDY61ANv8I3sESZCVDgCr0mkWXSktLvVD5fj2bGMZB8XFgOpFYw7qGEJvNBjgFaTEOd7dzqOE23wfj6tMeh5ZBe8aNHAusBJhKpEqfh34jF9ZBSUaE1AZD&callback=?', function(json, status, xhr) { console.log(json);
+	$.getJSON('https://graph.facebook.com/v3.1/'+id+'/?fields=id,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&access_token=EAABZBstjNtoQBAEPYR4UGY9EktG1hrBVfZAZAi24EmrW0cWJZBejPbXvcFFRpV1RgCZBkr1gcTPNCECtozIT3lYrcypIgYLgD3nuE2jtJSaRHiQkGJWDWCnGXfGZCUXjxfA0ifIhy6CEcOekNTU8OVpMZB65fFgZAPHsxvrxQXl04QZDZD&callback=?', function(json, status, xhr) { console.log(json);
         var n=json;
         var str="";
 	var id=n.id;
@@ -212,7 +212,7 @@ $('#currentid').val(postid);
 $('#terrminator').val(1);
 $('#counter').val(0);
 var counter=0;
-$.getJSON('https://graph.facebook.com/v3.1/'+postid+'/?fields=id,created_time,picture,name,story,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&&access_token=EAABZBstjNtoQBAJZBJCWecGskaLYe9hA75lfqHd6KanvujDY61ANv8I3sESZCVDgCr0mkWXSktLvVD5fj2bGMZB8XFgOpFYw7qGEJvNBjgFaTEOd7dzqOE23wfj6tMeh5ZBe8aNHAusBJhKpEqfh34jF9ZBSUaE1AZD&callback=?', function(json, status, xhr) { console.log(json);
+$.getJSON('https://graph.facebook.com/v3.1/'+postid+'/?fields=id,created_time,picture,name,story,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&&access_token=EAABZBstjNtoQBAEPYR4UGY9EktG1hrBVfZAZAi24EmrW0cWJZBejPbXvcFFRpV1RgCZBkr1gcTPNCECtozIT3lYrcypIgYLgD3nuE2jtJSaRHiQkGJWDWCnGXfGZCUXjxfA0ifIhy6CEcOekNTU8OVpMZB65fFgZAPHsxvrxQXl04QZDZD&callback=?', function(json, status, xhr) { console.log(json);
         var n=json;
 
 
@@ -252,7 +252,7 @@ $('#tbl tbody').html(`
      	
      	view_post_summary($('#currentid').val(),0); 
        
-     },1000);
+     },60000);
 
 
 
