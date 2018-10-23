@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reactions Monitoring</title>
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>	
+		
+</head>
+
+<body>
+<div class='container'>
+<div style='width:100%; position:absolute; top:0; left:0; background:#000; height:40px;'></div>
+
+
+<div style='margin-top:100px;margin-bottom:3%;'>Page Name/Page ID 
+	<input type='text' id='pagename' style='width:100%;' placeholder='type facebook page name or ID here' class='form-control'><button class='btn btn-primary' onclick='setalbums(10,0); $("#tbl tbody").html(""); $("#counter").val(0); $("#postid").val("");'>Search</button>
+
+</div>
+
+
+
+<div style='margin-top:20px;margin-bottom:3%;'>Search By Post ID 
+	<input type='text' id='postid' style='width:100%;' placeholder='type facebook post ID here' class='form-control'><button class='btn btn-primary' onclick='setalbums_indivPost();'>Search</button>
+
+</div>
+
+
+
+
+<hr>
+<div class='row'>
+<div class='col-sm-12'>
+<table id='tbl' class='table table-bordered'>
+<thead>
+<tr>
+<th>Post</th>
+<th>Reactions/Coment Summary</th>
+
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+<button style='width:100%;' class='btn btn-primary' id='nxt' onclick='next_btn()'>Show More</button>
+
+</div>
+	<input type='hidden' id='offset' value='0'>
+	<input type='hidden' id='counter' value='0'>
+	<input type='hidden' id='terrminator' value='0'>
+		<input type='hidden' id='currentid' value='0'>
+	<script type="text/javascript">
+
+		$(document).ready(function(){
+$('#bk').hide();
+
+
+		});
+		
+function setcont(n){
+	$('.setcont').hide();
+	$('#setcont'+n).show();
+	
+}
+
+
+
+function next_btn(){
+var offset=$('#offset').val();
+var next_offset=(parseInt(offset)+10);
+if(next_offset!=0){ $('#bk').show(); }
+$('#offset').val(next_offset);
+setalbums(10,next_offset)
+}
+
+function back_offset(){
+var offset=$('#offset').val();
+var next_offset=(parseInt(offset)-10)-1;
+if(next_offset==0){ $('#bk').hide(); }
+$('#offset').val(next_offset);
+setalbums(10,next_offset)	
+}
+
+
+function setalbums(limit,offset){
+var pagename=$('#pagename').val();
+var counter=parseInt($('#counter').val());
+
+$.getJSON('https://graph.facebook.com/v3.1/'+pagename+'/posts?fields=id,created_time,caption,picture,name,parent_id,description,child_attachments,backdated_time,source,story,link,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&limit='+limit+'&offset='+offset+'&access_token=EAABZBstjNtoQBAOEgF0JgqRqvuQ4mdZC5oKPIKuh2DWFic0X8QG5z6XzVfrG9ZAzWykjZAfj9M3xIKtupQiOsMYoZBlhaK5SoozqpE2OybU1UxIFustqUtdF17K9pLU3nUL9O7WO4aC0ZCNmcZC4VvXj9SZAtjn4m3EWsbuZAzX0byRqcRj5hqIfn&callback=?', function(json, status, xhr) { console.log(json);
+        var n=json.data;
+        var str="";
+	for(var x=0;x<n.length;x++){
+	var id=n[x].id;
+	var created_time=n[x].created_time;
+	var picture=(n[x].picture)?"<img src='"+n[x].picture+"'/>":"";
+	var name=n[x].name;
+	var story=n[x].story;
+var comments=n[x].comments.summary.total_count;
+var like=n[x].like.summary.total_count;
+var love=n[x].love.summary.total_count;
+var haha=n[x].haha.summary.total_count;
+var wow=n[x].wow.summary.total_count;
+var sad=n[x].sad.summary.total_count;
+var angry=n[x].angry.summary.total_count;
+$('#tbl tbody').append(`
+<tr>
+<td>
+<div>Id: `+id+`</div>
+<div>Created Time: `+created_time+`</div>
+<div>`+picture+`</div>
+<div><b>Name:`+name+`</b></div>
+<div><b>Story:`+story+`</b></div>
+</td>
+<td>
+<div>Comments: <span id='comment`+x+`'>`+comments+`</span></div>
+<div>Likes: <span id='likes`+x+`'>`+like+`</span></div>
+<div>Love: <span id='love`+x+`'>`+love+`</span></div>
+<div>Haha: <span id='haha`+x+`'>`+haha+`</span></div>
+<div>Wow: <span id='wow`+x+`'>`+wow+`</span></div>
+<div>Sad: <span id='sad`+x+`'>`+sad+`</span></div>
+<div>Angry: <span id='angry`+x+`'>`+angry+`</span></div>
+</td>
+
+</tr>
+	`);
+     setInterval(function(){ view_post_summary(id,counter); },1000);
+	
+	   counter+=1;
+
+
+     }
+
+$('#counter').val(counter);
+
+});
+
+}
+
+function getcover_photo(id,name){
+$.getJSON('https://graph.facebook.com/v2.12/'+id+'/photos?fields=album,height,source&limit=1&access_token=EAABZBstjNtoQBAOEgF0JgqRqvuQ4mdZC5oKPIKuh2DWFic0X8QG5z6XzVfrG9ZAzWykjZAfj9M3xIKtupQiOsMYoZBlhaK5SoozqpE2OybU1UxIFustqUtdF17K9pLU3nUL9O7WO4aC0ZCNmcZC4VvXj9SZAtjn4m3EWsbuZAzX0byRqcRj5hqIfn&callback=?', function(json, status, xhr) { console.log(json);
+          var n = json.data;
+
+          	var source=n[0].source;
+        $('#albums').append(`
+        	<div onclick='getPhotos(`+id+`)' style='cursor:pointer; padding:2%; margin:1%; box-shadow:0 0 1px rgba(0,0,0,0.4);' class='col-md-3 col-lg-2 col-sm-4'>
+        	<div style='height:200px; overflow:hidden;'>
+		<img src="`+source+`" width="100%;"/>
+		</div>
+		<div style='padding-top:10px;'><h2 style="font-size:15px;">`+name+` Gallery</h2></div>
+		</div>
+	`);  	
+
+      });   	
+}
+
+function view_post_summary(id,xx){
+
+	$.getJSON('https://graph.facebook.com/v3.1/'+id+'/?fields=id,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&&access_token=EAABZBstjNtoQBAOEgF0JgqRqvuQ4mdZC5oKPIKuh2DWFic0X8QG5z6XzVfrG9ZAzWykjZAfj9M3xIKtupQiOsMYoZBlhaK5SoozqpE2OybU1UxIFustqUtdF17K9pLU3nUL9O7WO4aC0ZCNmcZC4VvXj9SZAtjn4m3EWsbuZAzX0byRqcRj5hqIfn&callback=?', function(json, status, xhr) { console.log(json);
+        var n=json;
+        var str="";
+	var id=n.id;
+	
+var comments=n.comments.summary.total_count;
+var like=n.like.summary.total_count;
+var love=n.love.summary.total_count;
+var haha=n.haha.summary.total_count;
+var wow=n.wow.summary.total_count;
+var sad=n.sad.summary.total_count;
+var angry=n.angry.summary.total_count;
+
+$('#comment'+xx).text(comments);
+$('#likes'+xx).text(like);
+$('#love'+xx).text(love);
+$('#haha'+xx).text(haha);
+$('#wow'+xx).text(wow);
+$('#sad'+xx).text(sad);
+$('#angry'+xx).text(angry);
+
+
+
+});
+
+
+}
+
+
+
+
+function setalbums_indivPost(){
+var postid=$('#postid').val();
+$('#currentid').val(postid);
+$('#terrminator').val(1);
+$('#counter').val(0);
+var counter=0;
+$.getJSON('https://graph.facebook.com/v3.1/'+postid+'/?fields=id,created_time,picture,name,story,comments.limit(0).summary(1),reactions.type(LIKE).limit(0).summary(1).as(like),reactions.type(LOVE).limit(0).summary(1).as(love),reactions.type(HAHA).limit(0).summary(1).as(haha),reactions.type(WOW).limit(0).summary(1).as(wow),reactions.type(SAD).limit(0).summary(1).as(sad),reactions.type(ANGRY).limit(0).summary(1).as(angry)&&access_token=EAABZBstjNtoQBAOEgF0JgqRqvuQ4mdZC5oKPIKuh2DWFic0X8QG5z6XzVfrG9ZAzWykjZAfj9M3xIKtupQiOsMYoZBlhaK5SoozqpE2OybU1UxIFustqUtdF17K9pLU3nUL9O7WO4aC0ZCNmcZC4VvXj9SZAtjn4m3EWsbuZAzX0byRqcRj5hqIfn&callback=?', function(json, status, xhr) { console.log(json);
+        var n=json;
+
+
+x=0;
+
+	var picture=(n.picture)?"<img src='"+n.picture+"'/>":"";
+var comments=n.comments.summary.total_count;
+var like=n.like.summary.total_count;
+var love=n.love.summary.total_count;
+var haha=n.haha.summary.total_count;
+var wow=n.wow.summary.total_count;
+var sad=n.sad.summary.total_count;
+var angry=n.angry.summary.total_count;
+$('#terrminator').val(0);
+$('#tbl tbody').html(`
+<tr>
+<td>
+<div>Id: `+postid+`</div>
+<div>Created Time: `+n.created_time+`</div>
+<div>`+picture+`</div>
+<div><b>Name:`+n.name+`</b></div>
+<div><b>Story:`+n.story+`</b></div>
+</td>
+<td>
+<div>Comments: <span id='comment`+x+`'>`+comments+`</span></div>
+<div>Likes: <span id='likes`+x+`'>`+like+`</span></div>
+<div>Love: <span id='love`+x+`'>`+love+`</span></div>
+<div>Haha: <span id='haha`+x+`'>`+haha+`</span></div>
+<div>Wow: <span id='wow`+x+`'>`+wow+`</span></div>
+<div>Sad: <span id='sad`+x+`'>`+sad+`</span></div>
+<div>Angry: <span id='angry`+x+`'>`+angry+`</span></div>
+</td>
+
+</tr>
+	`);
+     setInterval(function(){ 
+     	
+     	view_post_summary($('#currentid').val(),0); 
+       
+     },1000);
+
+
+
+    });
+
+}
+
+
+	
+	</script>
+	</body>
+<script type="text/javascript" src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'></script>
+</html>
