@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: pineappltech.xyz
+Token: 51f3af4c105e7ce863888b49f2a4d4b762e290bd7719d121a6708d14ed5de671
